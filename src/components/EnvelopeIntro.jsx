@@ -90,22 +90,11 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
             <div className={`envelope__flap-wrap ${flapBack ? "is-back" : ""}`}>
               <motion.div
                 className="envelope__flap"
-                animate={
-                  opening
-                    ? { rotateX: 180, opacity: 0 }
-                    : { rotateX: 0, opacity: 1 }
-                }
+                animate={opening ? { rotateX: 180 } : { rotateX: 0 }}
                 transition={{
-                  rotateX: {
-                    duration: 1.2,
-                    delay: opening ? 0.08 : 0,
-                    ease: [0.45, 0.05, 0.2, 1],
-                  },
-                  opacity: {
-                    duration: 0.55,
-                    delay: opening ? 1.15 : 0,
-                    ease: [0.4, 0, 0.2, 1],
-                  },
+                  duration: 1.2,
+                  delay: opening ? 0.08 : 0,
+                  ease: [0.45, 0.05, 0.2, 1],
                 }}
               >
                 <div className="envelope__flap-face envelope__flap-face--out" />

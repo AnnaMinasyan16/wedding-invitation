@@ -31,11 +31,17 @@ html::-webkit-scrollbar {
   display: none;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
 body {
   font-family: var(--font-body);
   background: var(--bg-deep);
   color: var(--text-primary);
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -253,6 +259,17 @@ textarea {
   z-index: 1;
 }
 
+.envelope--open .envelope__flap-wrap {
+  animation: hide-envelope-triangle 0.01s linear 1.22s forwards;
+}
+
+@keyframes hide-envelope-triangle {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 .envelope__flap {
   position: absolute;
   inset: 0;
@@ -369,8 +386,7 @@ textarea {
 .hero {
   position: relative;
   z-index: 2;
-  min-height: 100vh;
-  min-height: 100svh;
+  min-height: var(--hero-h, 100svh);
   color: #f7f1ea;
   background: var(--bg-deep);
 }
@@ -378,8 +394,8 @@ textarea {
 .hero__frame {
   position: relative;
   width: 100%;
-  height: 100vh;
-  height: 100svh;
+  height: var(--hero-h, 100svh);
+  max-height: var(--hero-h, 100svh);
   overflow: hidden;
   background: #1c1411;
 }
@@ -770,6 +786,10 @@ textarea {
 }
 
 @media (max-width: 768px) {
+  .envelope--open .envelope__pocket {
+    animation: hide-envelope-triangle 0.4s ease 1.35s forwards;
+  }
+
   .music-toggle {
     top: 16px;
     right: 16px;

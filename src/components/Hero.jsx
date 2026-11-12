@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { invitation } from '../data/invitation'
 
@@ -12,6 +13,24 @@ const fadeUp = {
 
 export default function Hero() {
   const { partner1, partner2 } = invitation.couple
+
+  useEffect(() => {
+    const lockHeight = () => {
+      const height = window.visualViewport?.height ?? window.innerHeight
+      document.documentElement.style.setProperty('--hero-h', `${height}px`)
+    }
+
+    lockHeight()
+    let lastWidth = window.innerWidth
+    const onResize = () => {
+      if (window.innerWidth === lastWidth) return
+      lastWidth = window.innerWidth
+      lockHeight()
+    }
+
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
 
   return (
     <section className="hero" id="home">
