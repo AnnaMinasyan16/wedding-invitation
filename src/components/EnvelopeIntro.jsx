@@ -5,10 +5,19 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
   const [opening, setOpening] = useState(false);
   const [flapBack, setFlapBack] = useState(false);
   const [flapGone, setFlapGone] = useState(false);
+  const [isPhone, setIsPhone] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const [done, setDone] = useState(false);
   const envelopeRef = useRef(null);
   const [letterY, setLetterY] = useState({ closed: 12, open: -158 });
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsPhone(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   useEffect(() => {
     const envelope = envelopeRef.current;
@@ -30,8 +39,9 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
     if (opening) return;
     setOpening(true);
     onLetterOpen?.();
-    window.setTimeout(() => setFlapBack(true), 980);
-    window.setTimeout(() => setFlapGone(true), 1200);
+    const phone = window.matchMedia("(max-width: 768px)").matches;
+    window.setTimeout(() => setFlapBack(true), phone ? 420 : 980);
+    window.setTimeout(() => setFlapGone(true), phone ? 520 : 1200);
     window.setTimeout(() => {
       setLeaving(true);
       onOpen?.();
@@ -92,15 +102,25 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
             {!flapGone && <div className={`envelope__flap-wrap ${flapBack ? "is-back" : ""}`}>
               <motion.div
                 className="envelope__flap"
-                animate={opening ? { rotateX: 180 } : { rotateX: 0 }}
-                transition={{
-                  duration: 1.2,
-                  delay: opening ? 0.08 : 0,
-                  ease: [0.45, 0.05, 0.2, 1],
-                }}
+                animate={
+                  isPhone
+                    ? { opacity: opening ? 0 : 1, rotateX: 0 }
+                    : { rotateX: opening ? 180 : 0 }
+                }
+                transition={
+                  isPhone
+                    ? { duration: 0.4, ease: [0.4, 0, 0.2, 1] }
+                    : {
+                        duration: 1.2,
+                        delay: opening ? 0.08 : 0,
+                        ease: [0.45, 0.05, 0.2, 1],
+                      }
+                }
               >
                 <div className="envelope__flap-face envelope__flap-face--out" />
-                <div className="envelope__flap-face envelope__flap-face--in" />
+                {!isPhone && (
+                  <div className="envelope__flap-face envelope__flap-face--in" />
+                )}
                 <motion.button
                   type="button"
                   className="seal-button"

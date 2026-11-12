@@ -259,9 +259,8 @@ textarea {
   z-index: 1;
 }
 
-.envelope--clear .envelope__pocket {
-  clip-path: inset(48% 0 0 0);
-  animation: none;
+.envelope--open .envelope__pocket {
+  clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
 }
 
 .envelope__flap {
@@ -780,6 +779,16 @@ textarea {
 }
 
 @media (max-width: 768px) {
+  .envelope__flap-wrap,
+  .envelope__flap {
+    perspective: none;
+    transform-style: flat;
+  }
+
+  .envelope__flap-face--in {
+    display: none;
+  }
+
   .music-toggle {
     top: 16px;
     right: 16px;
