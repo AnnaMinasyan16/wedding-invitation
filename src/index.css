@@ -238,10 +238,9 @@ textarea {
   z-index: 3;
   border-radius: 3px;
   background:
-    linear-gradient(180deg, rgba(92, 64, 54, 0.12), rgba(92, 64, 54, 0) 16%),
-    linear-gradient(90deg, rgba(92, 64, 54, 0.05), transparent 12% 88%, rgba(92, 64, 54, 0.05)),
-    linear-gradient(180deg, #f6eee7 0%, #eadfd4 100%);
-  clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 28%),
+    linear-gradient(160deg, #f8f2eb, #efe3d8);
+  box-shadow: inset 0 0 0 1px rgba(90, 64, 52, 0.06);
 }
 
 .envelope__flap-wrap {
@@ -257,10 +256,6 @@ textarea {
 
 .envelope__flap-wrap.is-back {
   z-index: 1;
-}
-
-.envelope--open .envelope__pocket {
-  clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
 }
 
 .envelope__flap {
@@ -280,8 +275,18 @@ textarea {
 
 .envelope__flap-face--out {
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.45), transparent 30%),
-    linear-gradient(180deg, #fbf7f2, #f0e5db);
+    linear-gradient(180deg, #fffdfb 0%, #f3e4d6 100%);
+}
+
+.envelope__flap-outline {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 .envelope__flap-face--in {
@@ -296,6 +301,8 @@ textarea {
   left: 50%;
   bottom: 0;
   z-index: 2;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   width: calc(var(--env-w) * 0.2);
   height: calc(var(--env-w) * 0.2);
   display: grid;
@@ -779,16 +786,6 @@ textarea {
 }
 
 @media (max-width: 768px) {
-  .envelope__flap-wrap,
-  .envelope__flap {
-    perspective: none;
-    transform-style: flat;
-  }
-
-  .envelope__flap-face--in {
-    display: none;
-  }
-
   .music-toggle {
     top: 16px;
     right: 16px;

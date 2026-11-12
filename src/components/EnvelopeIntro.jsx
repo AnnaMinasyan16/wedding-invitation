@@ -5,19 +5,10 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
   const [opening, setOpening] = useState(false);
   const [flapBack, setFlapBack] = useState(false);
   const [flapGone, setFlapGone] = useState(false);
-  const [isPhone, setIsPhone] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const [done, setDone] = useState(false);
   const envelopeRef = useRef(null);
   const [letterY, setLetterY] = useState({ closed: 12, open: -158 });
-
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 768px)");
-    const update = () => setIsPhone(media.matches);
-    update();
-    media.addEventListener("change", update);
-    return () => media.removeEventListener("change", update);
-  }, []);
 
   useEffect(() => {
     const envelope = envelopeRef.current;
@@ -39,9 +30,8 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
     if (opening) return;
     setOpening(true);
     onLetterOpen?.();
-    const phone = window.matchMedia("(max-width: 768px)").matches;
-    window.setTimeout(() => setFlapBack(true), phone ? 420 : 980);
-    window.setTimeout(() => setFlapGone(true), phone ? 520 : 1200);
+    window.setTimeout(() => setFlapBack(true), 1000);
+    window.setTimeout(() => setFlapGone(true), 1380);
     window.setTimeout(() => {
       setLeaving(true);
       onOpen?.();
@@ -103,24 +93,38 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
               <motion.div
                 className="envelope__flap"
                 animate={
-                  isPhone
-                    ? { opacity: opening ? 0 : 1, rotateX: 0 }
-                    : { rotateX: opening ? 180 : 0 }
+                  opening
+                    ? { rotateX: 180, opacity: 0 }
+                    : { rotateX: 0, opacity: 1 }
                 }
-                transition={
-                  isPhone
-                    ? { duration: 0.4, ease: [0.4, 0, 0.2, 1] }
-                    : {
-                        duration: 1.2,
-                        delay: opening ? 0.08 : 0,
-                        ease: [0.45, 0.05, 0.2, 1],
-                      }
-                }
+                transition={{
+                  rotateX: {
+                    duration: 1.15,
+                    delay: opening ? 0.12 : 0,
+                    ease: [0.45, 0.05, 0.2, 1],
+                  },
+                  opacity: {
+                    duration: 0.4,
+                    delay: opening ? 0.95 : 0,
+                    ease: [0.4, 0, 0.2, 1],
+                  },
+                }}
               >
                 <div className="envelope__flap-face envelope__flap-face--out" />
-                {!isPhone && (
-                  <div className="envelope__flap-face envelope__flap-face--in" />
-                )}
+                <svg
+                  className="envelope__flap-outline"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <polygon
+                    points="0,0 50,100 100,0"
+                    fill="none"
+                    stroke="#7a5c50"
+                    strokeWidth="1.15"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                </svg>
                 <motion.button
                   type="button"
                   className="seal-button"
@@ -132,12 +136,6 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
                   whileTap={
                     opening ? undefined : { scale: 0.985, x: "-50%", y: "50%" }
                   }
-                  animate={
-                    opening
-                      ? { opacity: 0, x: "-50%", y: "50%" }
-                      : { opacity: 1, x: "-50%", y: "50%" }
-                  }
-                  transition={{ duration: 0.7, ease: [0.4, 0, 0.2, 1] }}
                   aria-label="Բացել"
                 >
                   <svg
