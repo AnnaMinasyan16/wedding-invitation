@@ -240,6 +240,11 @@ textarea {
     linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 28%),
     linear-gradient(160deg, #f8f2eb, #efe3d8);
   box-shadow: inset 0 0 0 1px rgba(90, 64, 52, 0.06);
+  clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+}
+
+.envelope--open .envelope__pocket {
+  clip-path: polygon(0 66%, 100% 66%, 100% 100%, 0 100%);
 }
 
 .envelope__flap-wrap {
@@ -790,6 +795,16 @@ textarea {
 }
 
 @media (max-width: 768px) {
+  .envelope__flap-wrap,
+  .envelope__flap {
+    perspective: none;
+    transform-style: flat;
+  }
+
+  .envelope__flap-face--in {
+    display: none;
+  }
+
   .music-toggle {
     top: 16px;
     right: 16px;
