@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
   const [opening, setOpening] = useState(false);
   const [flapBack, setFlapBack] = useState(false);
+  const [flapGone, setFlapGone] = useState(false);
   const [leaving, setLeaving] = useState(false);
   const [done, setDone] = useState(false);
   const envelopeRef = useRef(null);
@@ -30,6 +31,7 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
     setOpening(true);
     onLetterOpen?.();
     window.setTimeout(() => setFlapBack(true), 980);
+    window.setTimeout(() => setFlapGone(true), 1200);
     window.setTimeout(() => {
       setLeaving(true);
       onOpen?.();
@@ -66,7 +68,7 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
 
           <div
             ref={envelopeRef}
-            className={`envelope ${opening ? "envelope--open" : ""}`}
+            className={`envelope ${opening ? "envelope--open" : ""} ${flapGone ? "envelope--clear" : ""}`}
           >
             <div className="envelope__shadow" />
             <div className="envelope__body" />
@@ -87,7 +89,7 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
 
             <div className="envelope__pocket" />
 
-            <div className={`envelope__flap-wrap ${flapBack ? "is-back" : ""}`}>
+            {!flapGone && <div className={`envelope__flap-wrap ${flapBack ? "is-back" : ""}`}>
               <motion.div
                 className="envelope__flap"
                 animate={opening ? { rotateX: 180 } : { rotateX: 0 }}
@@ -149,7 +151,7 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
                   </svg>
                 </motion.button>
               </motion.div>
-            </div>
+            </div>}
           </div>
 
           <button

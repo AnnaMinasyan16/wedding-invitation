@@ -42,8 +42,8 @@ export const invitation = {
     },
   ],
   music: {
-    src: "/audio/classical.mp3",
-    title: "Pachelbel — Canon in D",
+    src: "/audio/romantic-wedding.mp3",
+    title: "Romantic Wedding",
     volume: 0.38,
   },
 };

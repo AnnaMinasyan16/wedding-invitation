@@ -259,15 +259,9 @@ textarea {
   z-index: 1;
 }
 
-.envelope--open .envelope__flap-wrap {
-  animation: hide-envelope-triangle 0.01s linear 1.22s forwards;
-}
-
-@keyframes hide-envelope-triangle {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
+.envelope--clear .envelope__pocket {
+  clip-path: inset(48% 0 0 0);
+  animation: none;
 }
 
 .envelope__flap {
@@ -786,10 +780,6 @@ textarea {
 }
 
 @media (max-width: 768px) {
-  .envelope--open .envelope__pocket {
-    animation: hide-envelope-triangle 0.4s ease 1.35s forwards;
-  }
-
   .music-toggle {
     top: 16px;
     right: 16px;
