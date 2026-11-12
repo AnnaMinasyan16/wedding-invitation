@@ -53,19 +53,11 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
       >
-        <motion.div
-          className="envelope-scene"
-          animate={opening ? { y: -6 } : { y: 0 }}
-          transition={{
-            duration: 1.8,
-            delay: opening ? 0.85 : 0,
-            ease: [0.22, 1, 0.36, 1],
-          }}
-        >
-          <p className={`envelope-caption ${opening ? "is-hidden" : ""}`}>
-            Հարսանեկան հրավիրատոմս
-          </p>
+        <p className={`envelope-caption ${opening ? "is-hidden" : ""}`}>
+          Հարսանեկան հրավիրատոմս
+        </p>
 
+        <div className="envelope-scene">
           <div
             ref={envelopeRef}
             className={`envelope ${opening ? "envelope--open" : ""} ${flapGone ? "envelope--clear" : ""}`}
@@ -180,7 +172,7 @@ export default function EnvelopeIntro({ onOpen, onClosed, onLetterOpen }) {
           >
             Բացել
           </button>
-        </motion.div>
+        </div>
       </motion.div>
     </AnimatePresence>
   );

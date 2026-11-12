@@ -144,7 +144,6 @@ textarea {
   flex-direction: column;
   align-items: center;
   overflow: visible;
-  padding-top: 12px;
   --env-w: clamp(280px, 42vw, 460px);
   --env-h: calc(var(--env-w) * 0.66);
 }
@@ -335,7 +334,12 @@ textarea {
 }
 
 .envelope-caption {
-  margin: 0 0 72px;
+  position: absolute;
+  top: max(28px, env(safe-area-inset-top, 0px) + 20px);
+  right: 24px;
+  left: 24px;
+  z-index: 2;
+  margin: 0;
   font-size: 1.02rem;
   font-weight: 400;
   color: rgba(62, 42, 34, 0.62);
